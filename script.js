@@ -6,7 +6,6 @@ const countriesContainer = document.querySelector('.countries');
 ///////////////////////////////////////
 
 // Very basic XMLHttpRequest (Old School)
-
 /* const getCountryData = function (country) {
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v2/name/${country}`);
@@ -66,7 +65,7 @@ const renderCountry = function (response, className = '') {
   countriesContainer.style.opacity = 1;
 };
 
-const getCountryAndNeighbour = function (country) {
+/* const getCountryAndNeighbour = function (country) {
   // AJAX Call country 1
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v2/name/${country}`);
@@ -80,7 +79,7 @@ const getCountryAndNeighbour = function (country) {
     renderCountry(response);
 
     //Get Neighbour Country 1
-    const neighbour = response.borders?.[0]; // optional chaining
+    const neighbour = response.borders?.[1]; // optional chaining
 
     if (!neighbour) return;
 
@@ -90,13 +89,37 @@ const getCountryAndNeighbour = function (country) {
     request2.send();
 
     request2.addEventListener('load', function () {
-      const response = JSON.parse(this.responseText);
-      console.log(response);
+      const response2 = JSON.parse(this.responseText);
+      console.log(response2);
 
-      renderCountry(response, 'neighbour');
+      renderCountry(response2, 'neighbour');
+
+      // Get Neighbour country 2 - Neighbour of Neighbour - Callback Hell
+      const neighbour2 = response2.borders?.[0];
+      //   console.log(neighbour2);
+
+      if (!neighbour2) return;
+      const request3 = new XMLHttpRequest();
+      request3.open('GET', `https://restcountries.com/v2/alpha/${neighbour2}`);
+      request3.send();
+
+      request3.addEventListener('load', function () {
+        const response3 = JSON.parse(this.responseText);
+        console.log(response3);
+
+        renderCountry(response3, 'neighbour2');
+      });
     });
   });
 };
 
-getCountryAndNeighbour('portugal');
-// getCountryAndNeighbour('usa');
+// getCountryAndNeighbour('portugal');
+getCountryAndNeighbour('usa');
+ */
+
+/*
+// We used to do like this  
+const request = new XMLHttpRequest();
+request.open('GET', `https://restcountries.com/v2/name/${country}`);
+request.send(); */
+
