@@ -228,7 +228,7 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
 //     });
 // };
 
-const getCountryData = function (country) {
+/* const getCountryData = function (country) {
   // Country 1
   getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
     .then(data => {
@@ -269,7 +269,7 @@ const getCountryData = function (country) {
 
 btn.addEventListener('click', function () {
   getCountryData('usa');
-});
+}); */
 
 /* Asynchronous JavaScript 
 Coding Challenge #1 
@@ -346,7 +346,7 @@ Promise.resolve('Resolved promise 2').then(res => {
 console.log('Test end');
  */
 
-const lotteryPromise = new Promise(function (resolve, reject) {
+/* const lotteryPromise = new Promise(function (resolve, reject) {
   console.log('Draw is happening');
   setTimeout(() => {
     if (Math.random() >= 0.5) {
@@ -383,3 +383,59 @@ wait(1)
 
 Promise.resolve('abc').then(x => console.log(x));
 Promise.reject(new Error('abc')).catch(x => console.log(x));
+ */
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position =>resolve(position),
+    //   err => reject(err)
+    // );
+
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// Promise based API
+getPosition().then(pos => console.log(pos));
+
+const whereAmI = () => {
+  getPosition()
+    .then(pos => {
+      console.log(pos.coords);
+      const { latitude: lat, longitude: lng } = pos.coords;
+      return fetch(
+        `https://nominatim.openstreetmap.org/reverse.php?lat=${lat}&lon=${lng}&zoom=10&format=jsonv2`
+      );
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Problem with the API ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.address.city}, ${data.address.country}`);
+
+      const country = data.address.country;
+
+      return fetch(`https://restcountries.com/v2/name/${country}`);
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Problem with the API ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      renderCountry(data[0]);
+      console.log(data);
+    })
+    .catch(err => console.error(`${err.message} 🔥🔥`))
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
+
+btn.addEventListener('click', function () {
+  whereAmI();
+});
