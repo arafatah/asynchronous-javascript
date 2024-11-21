@@ -298,14 +298,13 @@ Test data:
 GOOD LUCK 
 */
 
-const whereAmI = (lat, lng) => {
-
+/* const whereAmI = (lat, lng) => {
   fetch(
     `https://nominatim.openstreetmap.org/reverse.php?lat=${lat}&lon=${lng}&zoom=10&format=jsonv2`
   )
-
     .then(response => {
-      if (!response.ok) throw new Error(`Problem with the API ${response.status}`);
+      if (!response.ok)
+        throw new Error(`Problem with the API ${response.status}`);
       return response.json();
     })
     .then(data => {
@@ -317,7 +316,8 @@ const whereAmI = (lat, lng) => {
       return fetch(`https://restcountries.com/v2/name/${country}`);
     })
     .then(response => {
-      if (!response.ok) throw new Error(`Problem with the API ${response.status}`);
+      if (!response.ok)
+        throw new Error(`Problem with the API ${response.status}`);
       return response.json();
     })
     .then(data => {
@@ -332,6 +332,54 @@ const whereAmI = (lat, lng) => {
 
 whereAmI(52.508, 13.381);
 whereAmI(19.037, 72.873);
-whereAmI(-33.933, 18.474);
+whereAmI(-33.933, 18.474); */
 
+/* console.log('Test start');
+setTimeout(() => {
+  console.log('0 sec timer');
+}, 0);
 
+Promise.resolve('Resolved promise 1').then(res => console.log(res));
+Promise.resolve('Resolved promise 2').then(res => {
+  for (let i = 0; i < 1000000000; i++) {}
+})
+console.log('Test end');
+ */
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Draw is happening');
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve('You Win');
+    } else {
+      reject(new Error('You lost your money'));
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// Promisify setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(1)
+  .then(() => {
+    console.log('I waited for 2 sec');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 2 sec');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 3 sec');
+    return wait(1);
+  })
+  .then(() => console.log('I waited for 4 second'));
+
+Promise.resolve('abc').then(x => console.log(x));
+Promise.reject(new Error('abc')).catch(x => console.log(x));
