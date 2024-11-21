@@ -3,7 +3,7 @@
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
-/* const renderCountry = function (response, className = '') {
+const renderCountry = function (response, className = '') {
   const html = `
     <article class="country ${className}">
       <img class="country__img" src="${response?.flags?.png}" />
@@ -13,7 +13,9 @@ const countriesContainer = document.querySelector('.countries');
         <p class="country__row"><span>👫</span>${(
           response.population / 1000000
         ).toFixed(1)} people</p>
-        <p class="country__row"><span>🗣️</span>${response?.languages?.[0].name}</p>
+        <p class="country__row"><span>🗣️</span>${
+          response?.languages?.[0].name
+        }</p>
         <p class="country__row"><span>💰</span>${
           response?.currencies?.[0].name
         }</p>
@@ -23,9 +25,9 @@ const countriesContainer = document.querySelector('.countries');
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
   // countriesContainer.style.opacity = 1;
-}; */
+};
 
-const renderCountry = function (response, className = '') {
+/* const renderCountry = function (response, className = '') {
   const html = `
     <article class="country ${className}">
       <img class="country__img" src="${response?.flags?.png}" />
@@ -43,7 +45,7 @@ const renderCountry = function (response, className = '') {
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
   // countriesContainer.style.opacity = 1;
-};
+}; */
 
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
@@ -294,14 +296,16 @@ Test data:
 § Coordinates 2: 19.037, 72.873 
 § Coordinates 3: -33.933, 18.474 
 GOOD LUCK 
- */
+*/
 
 const whereAmI = (lat, lng) => {
+
   fetch(
     `https://nominatim.openstreetmap.org/reverse.php?lat=${lat}&lon=${lng}&zoom=10&format=jsonv2`
   )
+
     .then(response => {
-      if (!response.ok) throw Error(`Problem with the API ${response.status}`);
+      if (!response.ok) throw new Error(`Problem with the API ${response.status}`);
       return response.json();
     })
     .then(data => {
@@ -313,11 +317,11 @@ const whereAmI = (lat, lng) => {
       return fetch(`https://restcountries.com/v2/name/${country}`);
     })
     .then(response => {
-      if (!response.ok) throw Error(`Problem with the API ${response.status}`);
+      if (!response.ok) throw new Error(`Problem with the API ${response.status}`);
       return response.json();
     })
     .then(data => {
-      renderCountry(data[0]);
+      renderCountry(data[0], 'neighbour2');
       console.log(data);
     })
     .catch(err => console.error(`${err.message} 🔥🔥`))
@@ -329,3 +333,5 @@ const whereAmI = (lat, lng) => {
 whereAmI(52.508, 13.381);
 whereAmI(19.037, 72.873);
 whereAmI(-33.933, 18.474);
+
+
