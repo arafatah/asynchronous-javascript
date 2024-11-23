@@ -49,7 +49,7 @@ const renderCountry = function (response, className = '') {
 
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 /////////////////////
@@ -517,26 +517,36 @@ const getPosition2 = function () {
 };
 
 const whereAmI = async function () {
-  // Geolocation
-  const pos = await getPosition2();
-  const { latitude: lat, longitude: lng } = pos.coords;
+  try {
+    // Geolocation
+    const pos = await getPosition2();
+    const { latitude: lat, longitude: lng } = pos.coords;
 
-  const resGeo = await fetch(
-    `https://nominatim.openstreetmap.org/reverse.php?lat=${lat}&lon=${lng}&zoom=10&format=jsonv2`
-  );
-  const dataGeo = await resGeo.json();
-  console.log(dataGeo);
-  console.log(`You are in ${dataGeo.address.city}, ${dataGeo.address.country}`);
+    const resGeo = await fetch(
+      `https://nominatim.openstreetmap.org/reverse.php?lat=${lat}&lon=${lng}&zoom=10&format=jsonv2`
+    );
+    if (!resGeo.ok) throw new Error(`Problem with the API ${resGeo.status}`);
+    const dataGeo = await resGeo.json();
+    console.log(dataGeo);
+    console.log(
+      `You are in ${dataGeo.address.city}, ${dataGeo.address.country}`
+    );
 
-  const res = await fetch(
-    `https://restcountries.com/v2/name/${dataGeo.address.country}`
-  );
-  const data = await res.json();
-  console.log(data);
-  renderCountry(data[0]);
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${dataGeo.address.country}`
+    );
+    if (!res.ok) throw new Error(`Problem with the API ${res.status}`);
+    const data = await res.json();
+    console.log(data);
+    renderCountry(data[0]);
+  } catch (err) {
+    console.error(`${err.message} 🔥🔥`);
+    renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+  }
 };
 
 whereAmI();
+whereAmI();
+whereAmI();
+
 console.log('FIRST');
-
-
