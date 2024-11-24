@@ -539,14 +539,53 @@ const whereAmI = async function () {
     const data = await res.json();
     console.log(data);
     renderCountry(data[0]);
+
+    return `You are in ${dataGeo.address.city}, ${dataGeo.address.country}`;
   } catch (err) {
     console.error(`${err.message} 🔥🔥`);
     renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
   }
 };
 
-whereAmI();
-whereAmI();
-whereAmI();
+console.log('1: Will get location');
+// const city = whereAmI();
+// console.log(city);
+whereAmI().then(city => console.log(city));
+console.log('2: Finished getting location');
 
-console.log('FIRST');
+// try {
+//   let y = 1;
+//   const x = 2;
+//   x = 2;
+// } catch {
+//   alert(err.message);
+// }
+
+// Promise.Race
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v2/name/tanzania`),
+    getJSON(`https://restcountries.com/v2/name/mexico`),
+    getJSON(`https://restcountries.com/v2/name/italy`),
+  ]);
+  console.log(res[0]);
+})();
+
+// Only get one result - not an array
+// Promise.rejected also can win the race. (No matter it's fulfilled or rejected.)
+
+// Special timeout function
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('Request took too long!'));
+    }, sec * 1000);
+  });
+};
+
+Promise.race([
+  getJSON(`https://restcountries.com/v2/name/tanzania`),
+  timeout(5),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
