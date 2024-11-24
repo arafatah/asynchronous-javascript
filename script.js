@@ -589,3 +589,30 @@ Promise.race([
 ])
   .then(res => console.log(res))
   .catch(err => console.error(err));
+
+// Promise.allSettled
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another success'),
+]).then(res => console.log(res));
+
+// Promise.all 
+// If one of the promise is rejected, then the whole promise will be rejected
+Promise.all([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another success'),
+]).then(res => console.log(res))
+  .catch(err => console.error(err));
+
+  // Promise.any [ES2021]  
+  // Returns the first settled promise like Promise.race
+  // If all of the promises are rejected, then the whole promise will be rejected
+  // It's ignoring the rejected promises
+  Promise.any([
+    Promise.resolve('2:Success'),
+    Promise.reject('2: Error'),
+    Promise.resolve('2:Another success'),
+  ]).then(res => console.log(res))
+    .catch(err => console.error(err));
