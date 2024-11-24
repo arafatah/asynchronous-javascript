@@ -27,6 +27,19 @@ const renderCountry = function (response, className = '') {
   countriesContainer.style.opacity = 1;
 };
 
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+
+    return response.json();
+  });
+};
+
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  countriesContainer.style.opacity = 1;
+};
+
 /* const renderCountry = function (response, className = '') {
   const html = `
     <article class="country ${className}">
@@ -46,11 +59,6 @@ const renderCountry = function (response, className = '') {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   // countriesContainer.style.opacity = 1;
 }; */
-
-const renderError = function (msg) {
-  countriesContainer.insertAdjacentText('beforeend', msg);
-  countriesContainer.style.opacity = 1;
-};
 
 /////////////////////
 /////////////////////////////
@@ -173,13 +181,6 @@ console.log(request);
 // ↡
 // Consume Promise - To Consume need to build first.
 
-const getJSON = function (url, errorMsg = 'Something went wrong') {
-  return fetch(url).then(response => {
-    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
-
-    return response.json();
-  });
-};
 // const getCountryData = function (country) {
 //   fetch(`https://restcountries.com/v2/name/${country}`)
 //     .then(response => {
@@ -597,22 +598,24 @@ Promise.allSettled([
   Promise.resolve('Another success'),
 ]).then(res => console.log(res));
 
-// Promise.all 
+// Promise.all
 // If one of the promise is rejected, then the whole promise will be rejected
 Promise.all([
   Promise.resolve('Success'),
   Promise.reject('Error'),
   Promise.resolve('Another success'),
-]).then(res => console.log(res))
+])
+  .then(res => console.log(res))
   .catch(err => console.error(err));
 
-  // Promise.any [ES2021]  
-  // Returns the first settled promise like Promise.race
-  // If all of the promises are rejected, then the whole promise will be rejected
-  // It's ignoring the rejected promises
-  Promise.any([
-    Promise.resolve('2:Success'),
-    Promise.reject('2: Error'),
-    Promise.resolve('2:Another success'),
-  ]).then(res => console.log(res))
-    .catch(err => console.error(err));
+// Promise.any [ES2021]
+// Returns the first settled promise like Promise.race
+// If all of the promises are rejected, then the whole promise will be rejected
+// It's ignoring the rejected promises
+Promise.any([
+  Promise.resolve('2:Success'),
+  Promise.reject('2: Error'),
+  Promise.resolve('2:Another success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
