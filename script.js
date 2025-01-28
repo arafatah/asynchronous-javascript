@@ -247,7 +247,7 @@ const getCountryData = function (country) {
       renderCountry(data, 'neighbour');
       console.log(data);
       const neighbour2 = data.borders?.[0];
-      if (!neighbour2) return;
+      if (!neighbour2) throw new Error('No neighbour found!');
 
       // Country 3
       return getJSON(
@@ -272,6 +272,8 @@ const getCountryData = function (country) {
 btn.addEventListener('click', function () {
   getCountryData('usa');
 });
+
+// getCountryData('fddffdfd')
 
 /* Asynchronous JavaScript 
 Coding Challenge #1 
@@ -300,9 +302,10 @@ Test data:
 GOOD LUCK 
 */
 
-/* const whereAmI = (lat, lng) => {
+const whereAmI = (lat, lng) => {
   fetch(
     `https://nominatim.openstreetmap.org/reverse.php?lat=${lat}&lon=${lng}&zoom=10&format=jsonv2`
+    // `https://api.bigdatecloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
   )
     .then(response => {
       if (!response.ok)
@@ -332,9 +335,9 @@ GOOD LUCK
     });
 };
 
-whereAmI(52.508, 13.381);
-whereAmI(19.037, 72.873);
-whereAmI(-33.933, 18.474); */
+whereAmI(64.4101632,15.3902287);
+whereAmI(44.899994, 82.8460125);
+whereAmI(46.0507004, 45.9488192);
 
 /* console.log('Test start');
 setTimeout(() => {
