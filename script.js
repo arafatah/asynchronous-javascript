@@ -99,7 +99,7 @@ getCountryData('usa');
 // getCountryData('ind')
  */
 
-/* const getCountryAndNeighbour = function (country) {
+/* const getCountryAndNeighbor = function (country) {
   // AJAX Call country 1
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v2/name/${country}`);
@@ -112,7 +112,7 @@ getCountryData('usa');
     // Render Country
     renderCountry(response);
 
-    //Get Neighbour Country 1
+    //Get Neighbor Country 1
     const neighbour = response.borders?.[1]; // optional chaining
 
     if (!neighbour) return;
@@ -147,8 +147,8 @@ getCountryData('usa');
   });
 };
 
-// getCountryAndNeighbour('portugal');
-getCountryAndNeighbour('usa');
+// getCountryAndNeighbor('portugal');
+getCountryAndNeighbor('usa');
  */
 
 /*
@@ -747,3 +747,35 @@ const loadAll = async function (imgArr) {
 };
 
 loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
+
+const getCountryAndNeighbor = function (country) {
+  const request = new XMLHttpRequest();
+  request.open('GET', `https://restcountries.com/v2/name/${country}`)
+  request.send()
+
+  request.addEventListener('load', function () {
+    const [data] = JSON.parse(this.responseText)
+    console.log(data)
+    renderCountry(data)
+
+    // Get neighour country 
+    const neighbour = data.borders?.[0]
+    console.log('neigh', neighbour)
+
+    if (!neighbour) return
+    const request2 = new XMLHttpRequest();
+    request2.open('GET', `https://restcountries.com/v2/alpha/${neighbour}`)
+    request2.send()
+
+    request2.addEventListener('load', function () {
+      // console.log(this.responseText)
+      const data2 = JSON.parse(this.responseText)
+      console.log(data2)
+
+      renderCountry(data2, 'neighbour')
+    })
+
+  })
+}
+
+getCountryAndNeighbor('portugal')
