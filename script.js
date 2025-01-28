@@ -335,9 +335,10 @@ const whereAmI = (lat, lng) => {
     });
 };
 
-whereAmI(64.4101632,15.3902287);
+whereAmI(64.4101632, 15.3902287);
 whereAmI(44.899994, 82.8460125);
 whereAmI(46.0507004, 45.9488192);
+whereAmI(23.7764608, 90.3675904);
 
 /* console.log('Test start');
 setTimeout(() => {
@@ -785,3 +786,31 @@ loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
 }
 
 getCountryAndNeighbor('portugal') */
+
+/* The event loop is a fundamental concept in JavaScript that allows for non-blocking, asynchronous operations. It is crucial for understanding how JavaScript handles tasks such as I/O operations, timers, and promises.
+
+How the Event Loop Works
+Call Stack: This is where your code is executed. Functions are pushed onto the stack when they are called and popped off when they return.
+
+Web APIs: These are browser-provided APIs like setTimeout, DOM events, and fetch. When you call one of these APIs, the task is handed off to the browser, allowing the call stack to continue executing other code.
+
+Callback Queue: When a Web API operation completes, its callback function is placed in the callback queue. This queue holds all the functions that are ready to be executed.
+
+Event Loop: The event loop continuously checks the call stack and the callback queue. If the call stack is empty, it pushes the first function from the callback queue onto the call stack, allowing it to be executed.
+
+Example
+Consider the following code:
+
+Execution Flow:
+
+console.log('Start') is executed and prints "Start".
+setTimeout is called, and its callback is handed off to the Web API, which will wait for 1000ms.
+console.log('End') is executed and prints "End".
+After 1000ms, the setTimeout callback is moved to the callback queue.
+The event loop checks the call stack, finds it empty, and pushes the setTimeout callback onto the call stack.
+The setTimeout callback is executed, printing "Timeout".
+Key Points
+Non-blocking: The event loop allows JavaScript to perform non-blocking operations, meaning it can handle multiple tasks without waiting for one to complete before starting another.
+Asynchronous: Functions like setTimeout, fetch, and promises rely on the event loop to handle asynchronous operations.
+Single-threaded: JavaScript runs on a single thread, but the event loop enables it to manage asynchronous tasks efficiently.
+Understanding the event loop is essential for writing efficient, non-blocking JavaScript code, especially when dealing with asynchronous operations. */
