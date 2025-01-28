@@ -814,3 +814,24 @@ Non-blocking: The event loop allows JavaScript to perform non-blocking operation
 Asynchronous: Functions like setTimeout, fetch, and promises rely on the event loop to handle asynchronous operations.
 Single-threaded: JavaScript runs on a single thread, but the event loop enables it to manage asynchronous tasks efficiently.
 Understanding the event loop is essential for writing efficient, non-blocking JavaScript code, especially when dealing with asynchronous operations. */
+
+
+console.log('Test start')
+setTimeout(() => console.log('0 sec timer'), 0)
+Promise.resolve('Resolved promise 1').then(res => console.log(res))
+console.log('Test end');
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lottery draw is happening 🏆🏆🏆')
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve('You won 🏆🏆🏆')
+    } else {
+      reject('You lost the BDT 😔😔😔')
+    }
+  }, 2000);
+})
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err))
+
+// Promisifying setTimeout
