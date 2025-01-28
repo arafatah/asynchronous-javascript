@@ -26,11 +26,13 @@ const renderCountry = function (response, className = '') {
 };
 
 const getJSON = function (url, errorMsg = 'Something went wrong') {
-  return fetch(url).then(response => {
-    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+  return fetch(url)
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`${errorMsg} (${response.status})`);
 
-    return response.json();
-  });
+      return response.json();
+    });
 };
 
 const renderError = function (msg) {
@@ -256,6 +258,7 @@ const getCountryData = function (country) {
     .then(data2 => {
       renderCountry(data2, 'neighbour2');
     })
+
     // .catch(err => alert(err.message));
     .catch(err => {
       console.error(`${err} 💥💥💥`);
@@ -748,7 +751,7 @@ const loadAll = async function (imgArr) {
 
 loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
 
-const getCountryAndNeighbor = function (country) {
+/* const getCountryAndNeighbor = function (country) {
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v2/name/${country}`)
   request.send()
@@ -778,4 +781,4 @@ const getCountryAndNeighbor = function (country) {
   })
 }
 
-getCountryAndNeighbor('portugal')
+getCountryAndNeighbor('portugal') */
