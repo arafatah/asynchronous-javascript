@@ -11,14 +11,12 @@ const renderCountry = function (response, className = '') {
         <h3 class="country__name">${response.name}</h3>
         <h4 class="country__region">${response.region}</h4>
         <p class="country__row"><span>👫</span>${(
-          response.population / 1000000
-        ).toFixed(1)} people</p>
-        <p class="country__row"><span>🗣️</span>${
-          response?.languages?.[0].name
-        }</p>
-        <p class="country__row"><span>💰</span>${
-          response?.currencies?.[0].name
-        }</p>
+      response.population / 1000000
+    ).toFixed(1)} people</p>
+        <p class="country__row"><span>🗣️</span>${response?.languages?.[0].name
+    }</p>
+        <p class="country__row"><span>💰</span>${response?.currencies?.[0].name
+    }</p>
       </div>
     </article>
   `;
@@ -161,7 +159,7 @@ request.send(); */
 
 // Modern way fetching data from an API
 const request = fetch(`https://restcountries.com/v2/name/portugal`);
-// console.log(request);
+console.log(request);
 
 // In modern way get response by promise.
 // What is promise?
@@ -229,7 +227,7 @@ const request = fetch(`https://restcountries.com/v2/name/portugal`);
 //     });
 // };
 
-/* const getCountryData = function (country) {
+const getCountryData = function (country) {
   // Country 1
   getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
     .then(data => {
@@ -270,7 +268,7 @@ const request = fetch(`https://restcountries.com/v2/name/portugal`);
 
 btn.addEventListener('click', function () {
   getCountryData('usa');
-}); */
+});
 
 /* Asynchronous JavaScript 
 Coding Challenge #1 
