@@ -889,7 +889,7 @@ Promise.allSettled([
   Promise.reject('ERRROr'),
   Promise.resolve('success')
 ]).then(res => console.log(res))
-  .catch(err => console.error(err))
+.catch(err => console.error(err))
 
 // Promise.any [ES2021]
 Promise.any([
