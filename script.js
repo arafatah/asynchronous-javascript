@@ -39,7 +39,7 @@ const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
   countriesContainer.style.opacity = 1;
 };
-
+    
 /* const renderCountry = function (response, className = '') {
   const html = `
     <article class="country ${className}">
