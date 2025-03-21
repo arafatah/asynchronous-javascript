@@ -20,7 +20,7 @@ const renderCountry = function (response, className = '') {
       </div>
     </article>
   `;
-
+     
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 };
